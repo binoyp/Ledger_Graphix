@@ -36,10 +36,24 @@ class LedgerPlotter:
             plt.bar(i,float(dictBarChart[key]),color=c,alpha =0.5)
         plt.xticks(np.arange(len(dictBarChart))+0.4, dictBarChart.keys(),rotation =270)
         plt.ylabel("Rupees")
-        plt.show()    
-        
-        
-
+        plt.show()
+    def ExpenseSummary(self):
+        """
+        Out Pie Chart representation of Expenses
+        """
+        self.ledger_out_as_list = led_argParser('-s bal Exp')
+        reqd_Data   = self.ledger_out_as_list[1:-2]
+        dictPiechart = {}
+        for line in reqd_Data:
+            (amount,AccountName) = (line[0],line[2])
+            dictPiechart[AccountName]=float(amount)
+            
+#        val =np.array(dictPiechart.values())  
+        exp = [0.05]*len(dictPiechart)
+        print exp
+        plt.figure(figsize=(10,10))
+        plt.pie(dictPiechart.values(),labels=dictPiechart.keys(),explode = exp)
+        plt.show()
 
 
 #    dArr.add(line[0])
@@ -54,5 +68,6 @@ class LedgerPlotter:
 
 if __name__ == "__main__":
     lplot = LedgerPlotter('-s bal ^Exp ')
-    lplot.BalanceSummary('Air Food Lia')
+#    lplot.BalanceSummary('Exp')
+    lplot.ExpenseSummary()
     
